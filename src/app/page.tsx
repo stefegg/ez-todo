@@ -2,22 +2,9 @@ import Link from "next/link";
 import { prisma } from "@/db";
 import { TodoItem } from "@/components/TodoItem";
 import { revalidatePath } from "next/cache";
-function getTodos() {
-  return prisma.todo.findMany();
-}
-async function toggleTodo(id: string, complete: boolean) {
-  "use server";
-  await prisma.todo.update({
-    where: { id },
-    data: { complete, updatedAt: new Date(Date.now()) },
-  });
-  revalidatePath("/");
-}
-async function todoDelete(id: string) {
-  "use server";
-  await prisma.todo.delete({ where: { id } });
-  revalidatePath("/");
-}
+import { FilterBar } from "@/components/FilterBar";
+import { getTodos } from "@/utils";
+
 export default async function Home() {
   const todos = await getTodos();
   return (
@@ -31,16 +18,7 @@ export default async function Home() {
           New
         </Link>
       </header>
-      <ul className="gap-2 flex flex-col">
-        {todos.map((todo) => (
-          <TodoItem
-            key={todo.id}
-            {...todo}
-            toggleTodo={toggleTodo}
-            todoDelete={todoDelete}
-          />
-        ))}
-      </ul>
+      <FilterBar todos={todos} />
     </>
   );
 }
