@@ -1,30 +1,7 @@
 "use client";
 import { format } from "date-fns";
-import { Todo } from "@prisma/client";
-import { Dispatch, SetStateAction } from "react";
 import { ChangeEvent } from "react";
-type TodoItemProps = {
-  id: string;
-  title: string;
-  complete: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  toggleTodo: (id: string, complete: boolean) => void;
-  todoDelete: (id: string) => void;
-  showTodos: Todo[];
-  setShowTodos: Dispatch<
-    SetStateAction<
-      {
-        id: string;
-        title: string;
-        complete: boolean;
-        createdAt: Date;
-        updatedAt: Date;
-      }[]
-    >
-  >;
-  arrayIndex: number;
-};
+import { TodoItemProps } from "@/app/types";
 
 export function TodoItem({
   id,
@@ -32,6 +9,7 @@ export function TodoItem({
   complete,
   createdAt,
   updatedAt,
+  priority,
   toggleTodo,
   todoDelete,
   showTodos,
@@ -48,6 +26,7 @@ export function TodoItem({
     showTodos.splice(arrayIndex, 1);
     setShowTodos(showTodos);
   };
+  console.log(priority, "-------prio");
   return (
     <li
       className="flex border-2 border-slate-300 rounded p-2 flex-col"
@@ -67,6 +46,9 @@ export function TodoItem({
         >
           {title}
         </label>
+        {priority === "true" ? (
+          <div className="text-red-500">High Priority</div>
+        ) : null}
         <button
           className="rounded-xl w-6 border border-red-500 text-red-500 text-sm ml-auto"
           onClick={() => todoDeleteClick()}

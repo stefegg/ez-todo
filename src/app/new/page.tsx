@@ -8,7 +8,15 @@ async function createTodo(data: FormData) {
   if (typeof title !== "string" || title.length === 0) {
     throw new Error("Invalid Title");
   }
-  await prisma.todo.create({ data: { title, complete: false } });
+  const priority = data.get("priority")?.valueOf();
+  const checkPrio = () => {
+    if (priority !== undefined) {
+      return "true";
+    } else return "false";
+  };
+
+  const x = checkPrio();
+  await prisma.todo.create({ data: { title, priority: x, complete: false } });
   redirect("/");
 }
 
@@ -24,6 +32,15 @@ export default function Page() {
           name="title"
           className="border border-slate-300 bg-transparent rounded px-2 py-1 outline-none focus-within:border-slate-100"
         />
+        <div className="flex gap-2">
+          <input
+            type="checkbox"
+            className="cursor-pointer peer"
+            name="priority"
+          />
+          <div className="peer-checked:text-red-500">High Priority</div>
+        </div>
+
         <div className="flex gap-1 justify-end">
           <Link
             href=".."

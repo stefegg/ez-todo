@@ -3,12 +3,7 @@ import { useState } from "react";
 import { TodoItem } from "./TodoItem";
 import { Todo } from "@prisma/client";
 import { toggleTodo, todoDelete } from "@/utils";
-import { prisma } from "@/db";
-import { revalidatePath } from "next/cache";
-
-type TodoListProps = {
-  todos: Todo[];
-};
+import { TodoListProps } from "@/app/types";
 
 export function TodoList({ todos }: TodoListProps) {
   const [showTodos, setShowTodos] = useState(todos);
