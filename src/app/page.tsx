@@ -1,8 +1,5 @@
 import Link from "next/link";
-import { prisma } from "@/db";
-import { TodoItem } from "@/components/TodoItem";
-import { revalidatePath } from "next/cache";
-import { FilterBar } from "@/components/FilterBar";
+import { TodoList } from "@/components/TodoList";
 import { getTodos } from "@/utils";
 
 export default async function Home() {
@@ -18,7 +15,7 @@ export default async function Home() {
           New
         </Link>
       </header>
-      <FilterBar todos={todos} />
+      <TodoList todos={todos} />
     </>
   );
 }

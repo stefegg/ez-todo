@@ -2,6 +2,7 @@
 import { format } from "date-fns";
 import { Todo } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
+import { ChangeEvent } from "react";
 type TodoItemProps = {
   id: string;
   title: string;
@@ -42,6 +43,11 @@ export function TodoItem({
     showTodos.splice(arrayIndex, 1);
     setShowTodos(showTodos);
   };
+  const toggleTodoClick = (e: ChangeEvent<HTMLInputElement>) => {
+    toggleTodo(id, e.target.checked);
+    showTodos.splice(arrayIndex, 1);
+    setShowTodos(showTodos);
+  };
   return (
     <li
       className="flex border-2 border-slate-300 rounded p-2 flex-col"
@@ -53,7 +59,7 @@ export function TodoItem({
           type="checkbox"
           className="cursor-pointer peer"
           defaultChecked={complete}
-          onChange={(e) => toggleTodo(id, e.target.checked)}
+          onChange={(e) => toggleTodoClick(e)}
         />
         <label
           htmlFor={id}
