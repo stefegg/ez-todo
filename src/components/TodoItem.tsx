@@ -26,7 +26,6 @@ export function TodoItem({
     showTodos.splice(arrayIndex, 1);
     setShowTodos(showTodos);
   };
-  console.log(priority, "-------prio");
   return (
     <li
       className="flex border-2 border-slate-300 rounded p-2 flex-col"
